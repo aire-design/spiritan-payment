@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SchoolClassSeeder::class,
             PaymentPurposeSeeder::class,
+            FeeSeeder::class,
         ]);
 
         $class = SchoolClass::where('name', 'JSS 1')->first();
@@ -82,18 +83,7 @@ class DatabaseSeeder extends Seeder
             'outstanding_balance' => 350000,
         ]);
 
-        $fee = Fee::create([
-            'name' => 'Tuition Fee',
-            'category' => 'Tuition',
-            'school_class_id' => $class->id,
-            'academic_session_id' => $session->id,
-            'term_id' => $term->id,
-            'amount' => 350000,
-            'is_variable' => false,
-            'late_fee_penalty' => 10000,
-            'due_date' => '2025-10-15',
-            'is_active' => true,
-        ]);
+        $fee = Fee::where('name', 'First Term Tuition Fee 2025/2026')->first();
 
         Payment::create([
             'student_id' => $student->id,
