@@ -26,7 +26,8 @@ class PaystackService
 
     public function verifyTransaction(string $reference): array
     {
-        $url = rtrim((string) config('services.paystack.verify_url'), '/') . '/' . urlencode($reference);
+        $url = rtrim((string) config('services.paystack.verify_url'), '/').'/'.urlencode($reference);
+
         return $this->request('get', $url);
     }
 

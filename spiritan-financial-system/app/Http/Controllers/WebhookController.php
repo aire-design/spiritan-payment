@@ -38,7 +38,7 @@ class WebhookController extends Controller
                     'status' => 'success',
                     'paid_at' => $payment->paid_at ?? now(),
                     'verified_at' => now(),
-                    'receipt_number' => $payment->receipt_number ?? ('RCT-' . now()->format('YmdHis') . '-' . $payment->id),
+                    'receipt_number' => $payment->receipt_number ?? ('RCT-'.now()->format('YmdHis').'-'.$payment->id),
                     'channel' => data_get($payload, 'data.channel', $payment->channel),
                     'gateway_payload' => data_get($verified, 'data', $payload),
                 ]);

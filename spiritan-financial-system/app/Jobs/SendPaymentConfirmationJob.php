@@ -14,9 +14,7 @@ class SendPaymentConfirmationJob implements ShouldQueue
 {
     use Dispatchable, Queueable;
 
-    public function __construct(public int $paymentId)
-    {
-    }
+    public function __construct(public int $paymentId) {}
 
     public function handle(): void
     {

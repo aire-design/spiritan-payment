@@ -17,8 +17,9 @@ class PublicPaymentController extends Controller
     {
         $fees = Fee::where('is_active', true)->orderBy('name')->get();
         $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
+        $purposes = \App\Models\PaymentPurpose::where('is_active', true)->orderBy('name')->get();
 
-        return view('public.pay', compact('fees', 'classes'));
+        return view('public.pay', compact('fees', 'classes', 'purposes'));
     }
 
     public function store(Request $request, PaystackService $paystack)
@@ -30,6 +31,7 @@ class PublicPaymentController extends Controller
             'parent_email' => ['required', 'email'],
             'parent_phone' => ['required', 'string', 'max:25'],
             'fee_id' => ['required', 'exists:fees,id'],
+            'payment_purpose' => ['required', 'string', 'max:150'],
             'amount' => ['nullable', 'numeric', 'min:1'],
         ]);
 
@@ -48,10 +50,10 @@ class PublicPaymentController extends Controller
             'discount_amount' => 0,
             'late_fee_applied' => 0,
             'balance_after' => 0,
-            'payment_reference' => 'SPT-' . strtoupper(Str::random(10)),
+            'payment_reference' => 'SPT-'.strtoupper(Str::random(10)),
             'payment_method' => 'paystack',
             'payment_type' => $fee->category,
-            'payment_purpose' => $fee->name,
+            'payment_purpose' => $data['payment_purpose'],
             'channel' => 'web',
             'status' => 'pending',
             'payer_email' => $data['parent_email'],
@@ -79,7 +81,7 @@ class PublicPaymentController extends Controller
                 'paid_at' => now(),
                 'verified_at' => now(),
                 'channel' => data_get($verified, 'data.channel', 'web'),
-                'receipt_number' => $payment->receipt_number ?? ('RCT-' . now()->format('YmdHis') . '-' . $payment->id),
+                'receipt_number' => $payment->receipt_number ?? ('RCT-'.now()->format('YmdHis').'-'.$payment->id),
                 'gateway_payload' => data_get($verified, 'data', []),
             ]);
 
@@ -98,6 +100,7 @@ class PublicPaymentController extends Controller
     public function receiptPdf(Payment $payment)
     {
         $pdf = Pdf::loadView('receipts.payment', ['payment' => $payment]);
+
         return $pdf->download('receipt-'.$payment->payment_reference.'.pdf');
     }
 }

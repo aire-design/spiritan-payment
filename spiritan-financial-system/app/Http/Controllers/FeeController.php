@@ -13,6 +13,7 @@ class FeeController extends Controller
     public function index()
     {
         $fees = Fee::with(['schoolClass', 'academicSession', 'term'])->latest()->paginate(20);
+
         return view('fees.index', compact('fees'));
     }
 
@@ -21,6 +22,7 @@ class FeeController extends Controller
         $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $sessions = AcademicSession::orderByDesc('starts_at')->get();
         $terms = Term::orderByDesc('starts_at')->get();
+
         return view('fees.create', compact('classes', 'sessions', 'terms'));
     }
 
@@ -50,6 +52,7 @@ class FeeController extends Controller
     public function show(Fee $fee)
     {
         $fee->load(['schoolClass', 'academicSession', 'term', 'payments.student']);
+
         return view('fees.show', compact('fee'));
     }
 }

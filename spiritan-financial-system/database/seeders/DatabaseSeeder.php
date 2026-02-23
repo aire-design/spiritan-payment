@@ -47,11 +47,12 @@ class DatabaseSeeder extends Seeder
             'role' => 'principal',
         ]);
 
-        $class = SchoolClass::create([
-            'name' => 'JSS 1',
-            'level' => 'Secondary',
-            'is_active' => true,
+        $this->call([
+            SchoolClassSeeder::class,
+            PaymentPurposeSeeder::class,
         ]);
+
+        $class = SchoolClass::where('name', 'JSS 1')->first();
 
         $session = AcademicSession::create([
             'name' => '2025/2026',

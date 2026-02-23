@@ -12,6 +12,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with(['schoolClass', 'academicSession'])->latest()->paginate(20);
+
         return view('students.index', compact('students'));
     }
 
@@ -19,6 +20,7 @@ class StudentController extends Controller
     {
         $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $sessions = AcademicSession::orderByDesc('starts_at')->get();
+
         return view('students.create', compact('classes', 'sessions'));
     }
 
@@ -45,6 +47,7 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         $student->load(['schoolClass', 'academicSession', 'payments.fee']);
+
         return view('students.show', compact('student'));
     }
 }

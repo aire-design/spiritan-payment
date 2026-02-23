@@ -13,9 +13,7 @@ class PaymentConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Payment $payment)
-    {
-    }
+    public function __construct(public Payment $payment) {}
 
     public function envelope(): Envelope
     {

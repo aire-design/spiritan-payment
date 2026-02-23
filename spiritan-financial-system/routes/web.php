@@ -23,14 +23,15 @@ Route::post('/login', function (Request $request) {
 
     session([
         'user_type' => $data['user_type'],
-        'user_name' => $data['email'],
+        'user_name' => explode('@', $data['email'])[0],
+        'parent_email' => $data['email'],
     ]);
 
     if (in_array($data['user_type'], ['admin', 'bursar', 'it_officer'], true)) {
         return redirect()->route('dashboard')->with('success', 'Welcome back, administrator.');
     }
 
-    return redirect()->route('pay.create')->with('success', 'Welcome back.');
+    return redirect()->route('parent.history')->with('success', 'Welcome back.');
 })->name('login.submit');
 
 Route::get('/signup', fn () => view('auth.signup'))->name('signup');
@@ -45,13 +46,15 @@ Route::post('/signup', function (Request $request) {
     session([
         'user_type' => 'parent',
         'user_name' => $data['name'],
+        'parent_email' => $data['email'],
     ]);
 
-    return redirect()->route('pay.create')->with('success', 'Account profile created successfully.');
+    return redirect()->route('parent.history')->with('success', 'Account profile created successfully.');
 })->name('signup.submit');
 
 Route::post('/logout', function () {
     session()->forget(['user_type', 'user_name']);
+
     return redirect()->route('landing')->with('success', 'You have been logged out.');
 })->name('logout');
 
@@ -61,12 +64,16 @@ Route::get('/pay/verify/{payment}', [PublicPaymentController::class, 'verify'])-
 Route::get('/pay/receipt/{payment}', [PublicPaymentController::class, 'receipt'])->name('pay.receipt');
 Route::get('/pay/receipt/{payment}/pdf', [PublicPaymentController::class, 'receiptPdf'])->name('pay.receipt.pdf');
 
+Route::get('/history', [\App\Http\Controllers\ParentDashboardController::class, 'index'])->name('parent.history');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('students', StudentController::class)->except(['edit', 'update', 'destroy']);
 Route::resource('fees', FeeController::class)->except(['edit', 'update', 'destroy']);
 Route::resource('payments', PaymentController::class)->except(['edit', 'update', 'destroy']);
+Route::resource('classes', App\Http\Controllers\SchoolClassController::class);
+Route::resource('purposes', App\Http\Controllers\PaymentPurposeController::class);
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 Route::get('/reports/export/csv', [ReportController::class, 'exportCsv'])->name('reports.export.csv');
 Route::get('/reports/export/excel', [ReportController::class, 'exportExcel'])->name('reports.export.excel');
+Route::get('/reports/export/pdf', [ReportController::class, 'exportPdf'])->name('reports.export.pdf');
