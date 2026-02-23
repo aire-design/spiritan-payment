@@ -86,27 +86,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-floating mb-3">
                                 <select class="form-select elegant-input" id="feeSelect" name="fee_id" required>
-                                    <option value="" selected disabled>Select Fee / Bill</option>
+                                    <option value="" selected disabled>Select Fee / Payment Purpose</option>
                                     @foreach($fees as $fee)
                                         <option value="{{ $fee->id }}">{{ $fee->name }} @if(!$fee->is_variable)- ₦{{ number_format($fee->amount, 2) }}@endif</option>
                                     @endforeach
                                 </select>
-                                <label for="feeSelect" class="text-secondary">Related Fee / Bill</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <select class="form-select elegant-input" id="purposeSelect" name="payment_purpose" required>
-                                    <option value="" selected disabled>Select Payment Purpose</option>
-                                    @foreach($purposes as $purpose)
-                                        <option value="{{ $purpose->name }}">{{ $purpose->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="purposeSelect" class="text-secondary">Specific Purpose</label>
+                                <label for="feeSelect" class="text-secondary">Fee / Payment Purpose</label>
                             </div>
                         </div>
                         

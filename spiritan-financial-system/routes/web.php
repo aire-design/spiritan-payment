@@ -71,6 +71,7 @@ Route::resource('students', StudentController::class)->except(['edit', 'update',
 Route::resource('fees', FeeController::class)->except(['edit', 'update', 'destroy']);
 Route::resource('payments', PaymentController::class)->except(['edit', 'update', 'destroy']);
 Route::resource('classes', App\Http\Controllers\SchoolClassController::class);
+Route::resource('terms', App\Http\Controllers\TermController::class);
 Route::resource('purposes', App\Http\Controllers\PaymentPurposeController::class);
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

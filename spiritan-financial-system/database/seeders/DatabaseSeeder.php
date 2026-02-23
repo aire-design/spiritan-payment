@@ -47,12 +47,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'principal',
         ]);
 
-        $this->call([
-            SchoolClassSeeder::class,
-            PaymentPurposeSeeder::class,
-            FeeSeeder::class,
-        ]);
-
         $class = SchoolClass::where('name', 'JSS 1')->first();
 
         $session = AcademicSession::create([
@@ -68,6 +62,12 @@ class DatabaseSeeder extends Seeder
             'starts_at' => '2025-09-01',
             'ends_at' => '2025-12-15',
             'is_locked' => false,
+        ]);
+
+        $this->call([
+            SchoolClassSeeder::class,
+            PaymentPurposeSeeder::class,
+            FeeSeeder::class,
         ]);
 
         $student = Student::create([

@@ -32,7 +32,6 @@ class PaymentController extends Controller
         $data = $request->validate([
             'student_id' => ['required', 'exists:students,id'],
             'fee_id' => ['required', 'exists:fees,id'],
-            'payment_purpose' => ['required', 'string', 'max:150'],
             'amount_paid' => ['required', 'numeric', 'min:1'],
             'payment_method' => ['required', 'in:paystack,cash,bank_transfer,pos'],
             'payer_email' => ['nullable', 'email'],
@@ -61,7 +60,7 @@ class PaymentController extends Controller
             'gateway_reference' => $isOffline ? null : 'PSK-'.strtoupper(Str::random(12)),
             'payment_method' => $data['payment_method'],
             'payment_type' => $fee->category,
-            'payment_purpose' => $data['payment_purpose'],
+            'payment_purpose' => $fee->name,
             'channel' => $data['payment_method'],
             'status' => $isOffline ? 'success' : 'pending',
             'paid_at' => $isOffline ? now() : null,

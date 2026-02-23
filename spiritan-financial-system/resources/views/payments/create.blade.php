@@ -59,21 +59,12 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Fee</label>
+                <div class="col-md-8">
+                    <label class="form-label">Fee / Payment Purpose</label>
                     <select class="form-select" name="fee_id" required>
-                        <option selected disabled>Select Fee</option>
+                        <option selected disabled>Select Fee / Payment Purpose</option>
                         @foreach($fees as $fee)
                             <option value="{{ $fee->id }}">{{ $fee->name }} (₦{{ number_format($fee->amount, 2) }})</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Payment Purpose</label>
-                    <select class="form-select" name="payment_purpose" required>
-                        <option selected disabled>Select Purpose</option>
-                        @foreach($purposes as $purpose)
-                            <option value="{{ $purpose->name }}">{{ $purpose->name }}</option>
                         @endforeach
                     </select>
                 </div>

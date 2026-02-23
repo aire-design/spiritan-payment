@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FeeSeeder extends Seeder
@@ -16,7 +15,7 @@ class FeeSeeder extends Seeder
         $term = \App\Models\Term::first();
         $class = \App\Models\SchoolClass::first();
 
-        if (!$session || !$term) {
+        if (! $session || ! $term) {
             return;
         }
 

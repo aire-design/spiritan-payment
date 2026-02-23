@@ -31,7 +31,6 @@ class PublicPaymentController extends Controller
             'parent_email' => ['required', 'email'],
             'parent_phone' => ['required', 'string', 'max:25'],
             'fee_id' => ['required', 'exists:fees,id'],
-            'payment_purpose' => ['required', 'string', 'max:150'],
             'amount' => ['nullable', 'numeric', 'min:1'],
         ]);
 
@@ -53,7 +52,7 @@ class PublicPaymentController extends Controller
             'payment_reference' => 'SPT-'.strtoupper(Str::random(10)),
             'payment_method' => 'paystack',
             'payment_type' => $fee->category,
-            'payment_purpose' => $data['payment_purpose'],
+            'payment_purpose' => $fee->name,
             'channel' => 'web',
             'status' => 'pending',
             'payer_email' => $data['parent_email'],
