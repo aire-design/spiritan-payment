@@ -1,0 +1,4 @@
+C:\Program Files\BLIS-Standalone\server\php\php.exe
+C:\Users\airea\OneDrive\Documents\BLIS-Standalone\server\php\php.exe
+C:\xampp\php\php.exe
+C:\xampprab\php\php.exe

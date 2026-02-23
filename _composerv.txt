@@ -1,0 +1,30 @@
+Composer 2.3.0 dropped support for PHP <7.2.5 and you are running 5.6.20, please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_bz2.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_curl.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_fileinfo.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_gd2.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_gettext.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_intl.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_mbstring.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_exif.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_mysql.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_mysqli.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_openssl.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_pdo_mysql.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_pdo_sqlite.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '\xampp\php\ext\php_openssl.dll' - The specified module could not be found.
+ in Unknown on line 0
+PHP Warning:  Cannot open '\xampp\php\extras\browscap.ini' for reading in Unknown on line 0

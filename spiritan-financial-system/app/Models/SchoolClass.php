@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class SchoolClass extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'level',
+        'is_active',
+    ];
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class);
+    }
+
+    public function fees(): HasMany
+    {
+        return $this->hasMany(Fee::class);
+    }
+}

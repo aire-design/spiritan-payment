@@ -1,0 +1,73 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 28DC-50A7
+
+ Directory of C:\xampp\php
+
+11/09/2025  06:46 PM    <DIR>          .
+11/09/2025  06:46 PM    <DIR>          ..
+01/22/2016  09:45 AM    <DIR>          cfg
+11/09/2025  06:43 PM    <DIR>          CompatInfo
+11/09/2025  06:42 PM            18,869 CompatInfo.php
+11/09/2025  06:43 PM    <DIR>          data
+11/09/2025  06:42 PM            57,344 deplister.exe
+11/09/2025  06:43 PM    <DIR>          dev
+11/09/2025  06:43 PM    <DIR>          docs
+11/09/2025  06:43 PM    <DIR>          ext
+11/09/2025  06:43 PM    <DIR>          extras
+11/09/2025  06:42 PM         1,093,120 glib-2.dll
+11/09/2025  06:42 PM            14,336 gmodule-2.dll
+11/09/2025  06:43 PM        25,048,064 icudt56.dll
+11/09/2025  06:43 PM         1,825,280 icuin56.dll
+11/09/2025  06:43 PM            41,984 icuio56.dll
+11/09/2025  06:43 PM           216,576 icule56.dll
+11/09/2025  06:43 PM            41,984 iculx56.dll
+11/09/2025  06:43 PM            56,320 icutest55.dll
+11/09/2025  06:43 PM           163,328 icutu55.dll
+11/09/2025  06:43 PM         1,183,744 icuuc56.dll
+11/09/2025  06:43 PM            79,408 install.txt
+11/09/2025  06:43 PM    <DIR>          lib
+11/09/2025  06:43 PM         1,307,648 libeay32.dll
+11/09/2025  06:43 PM            35,328 libenchant.dll
+11/09/2025  06:43 PM           130,048 libpq.dll
+11/09/2025  06:43 PM           214,528 libsasl.dll
+11/09/2025  06:43 PM           229,376 libssh2.dll
+11/09/2025  06:43 PM             3,286 license.txt
+01/22/2016  09:45 AM    <DIR>          man
+11/09/2025  06:43 PM           535,008 msvcp110.dll
+11/09/2025  06:43 PM           875,472 msvcr110.dll
+11/09/2025  06:43 PM           533,820 news.txt
+11/09/2025  06:43 PM               503 pci
+11/09/2025  06:43 PM               566 pci.bat
+11/09/2025  06:43 PM             1,260 pci.css
+11/09/2025  06:43 PM            16,936 pciconf
+11/09/2025  06:43 PM               559 pciconf.bat
+11/09/2025  06:46 PM    <DIR>          pear
+11/09/2025  06:43 PM             4,351 pear.bat
+11/09/2025  06:43 PM             4,717 peardev.bat
+11/09/2025  06:43 PM             4,647 pecl.bat
+11/09/2025  06:43 PM                43 phar.phar.bat
+11/09/2025  06:43 PM            53,242 pharcommand.phar
+11/09/2025  06:43 PM            50,176 php-cgi.exe
+11/09/2025  06:43 PM            28,672 php-win.exe
+11/09/2025  06:43 PM            67,072 php.exe
+11/09/2025  06:43 PM             2,523 php.gif
+11/09/2025  06:43 PM            75,414 php.ini
+11/09/2025  06:43 PM            74,223 php.ini-development
+11/09/2025  06:43 PM            74,254 php.ini-production
+11/09/2025  06:43 PM            27,136 php5apache2_4.dll
+11/09/2025  06:43 PM           862,392 php5embed.lib
+11/09/2025  06:43 PM           145,920 php5phpdbg.dll
+11/09/2025  06:43 PM         7,130,112 php5ts.dll
+11/09/2025  06:43 PM           156,160 phpdbg.exe
+11/09/2025  06:43 PM             2,050 phpunit
+11/09/2025  06:43 PM             1,954 phpunit.bat
+11/09/2025  06:43 PM            21,360 readme-redist-bins.txt
+11/09/2025  06:46 PM    <DIR>          scripts
+11/09/2025  06:43 PM             3,630 snapshot.txt
+11/09/2025  06:43 PM           254,464 ssleay32.dll
+11/09/2025  06:46 PM    <DIR>          tests
+01/22/2016  09:45 AM    <DIR>          tmp
+11/09/2025  06:43 PM             1,447 webdriver-test-example.php
+01/22/2016  09:45 AM    <DIR>          www
+              50 File(s)     42,770,654 bytes
+              16 Dir(s)   6,600,777,728 bytes free

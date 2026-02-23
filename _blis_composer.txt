@@ -1,0 +1,1 @@
+﻿Composer 2.3.0 dropped support for PHP <7.2.5 and you are running 5.3.2, please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.

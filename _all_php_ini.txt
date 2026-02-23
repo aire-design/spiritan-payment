@@ -1,0 +1,9 @@
+C:\Program Files\BLIS-Standalone\docker\config\php.ini
+C:\Program Files\BLIS-Standalone\server\config_tpl\php.ini
+C:\Program Files\BLIS-Standalone\server\php\php.ini
+C:\Users\airea\AppData\Roaming\Local\run\FMpfQwmjX\conf\php\php.ini
+C:\Users\airea\BLIS\docker\config\php.ini
+C:\Users\airea\OneDrive\Documents\BLIS-Standalone\server\config_tpl\php.ini
+C:\Users\airea\OneDrive\Documents\BLIS-Standalone\server\php\php.ini
+C:\xampp\php\php.ini
+C:\xampprab\php\php.ini
