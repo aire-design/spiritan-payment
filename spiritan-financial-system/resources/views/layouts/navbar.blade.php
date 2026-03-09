@@ -51,9 +51,10 @@
 
                 @if($isAdmin)
                     <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('dashboard') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('students.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('students.index') }}">Students</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('classes.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('classes.index') }}">Classes</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('academic-sessions.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('academic-sessions.index') }}">Sessions</a></li>
                     <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('terms.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('terms.index') }}">Terms</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('classes.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('classes.index') }}">Classes</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('students.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('students.index') }}">Students</a></li>
                     <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('purposes.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('purposes.index') }}">Purposes</a></li>
                     <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('fees.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('fees.index') }}">Fees</a></li>
                     <li class="nav-item"><a class="nav-link px-3 py-2 fw-medium rounded-pill {{ Route::is('payments.*') ? 'active text-primary bg-primary bg-opacity-10' : 'text-secondary nav-link-hover' }}" href="{{ route('payments.index') }}">Payments</a></li>
@@ -71,14 +72,22 @@
                     <a class="nav-link px-4 py-2 fw-bold text-secondary nav-link-hover text-center" href="{{ route('login') }}">Login</a>
                     <a class="btn btn-primary px-4 py-2 rounded-pill fw-medium shadow-sm transition-all text-white" style="background: var(--md-primary); border: none;" href="{{ route('signup') }}">Get Started</a>
                 @else
-                    <div class="d-flex align-items-center gap-2 mb-3 mb-lg-0 justify-content-center">
-                        <div class="avatar-circle">
-                            <span class="fw-bold">{{ strtoupper(substr($userName ?? $userType, 0, 1)) }}</span>
+                    <div class="d-flex align-items-center gap-3 mb-3 mb-lg-0 justify-content-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="avatar-circle">
+                                <span class="fw-bold">{{ strtoupper(substr($userName ?? $userType, 0, 1)) }}</span>
+                            </div>
+                            <div class="d-flex flex-column lh-1">
+                                <span class="fw-bold small text-dark">{{ $userName ?? 'User' }}</span>
+                                <span class="text-muted" style="font-size: 0.7rem;">{{ ucfirst(str_replace('_', ' ', $userType)) }}</span>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column lh-1">
-                            <span class="fw-bold small text-dark">{{ $userName ?? 'User' }}</span>
-                            <span class="text-muted" style="font-size: 0.7rem;">{{ ucfirst(str_replace('_', ' ', $userType)) }}</span>
-                        </div>
+                        
+                        @if($userType === 'parent')
+                            <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-light rounded-circle shadow-sm" title="My Profile" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: var(--md-primary);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/></svg>
+                            </a>
+                        @endif
                     </div>
                     <form method="POST" action="{{ route('logout') }}" class="m-0">
                         @csrf

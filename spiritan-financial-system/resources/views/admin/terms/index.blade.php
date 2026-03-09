@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="text-spiritan mb-0">Terms Dashboard</h3>
-        <a href="{{ route('terms.create') }}" class="btn btn-spiritan">Add New Term</a>
+        <a href="{{ route('terms.create') }}" class="btn btn-md-primary rounded-pill px-4 shadow-sm fw-medium transition-all">Add New Term</a>
     </div>
 
     <div class="card p-4">

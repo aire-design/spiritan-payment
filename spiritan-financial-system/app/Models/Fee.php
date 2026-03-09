@@ -54,4 +54,9 @@ class Fee extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function feeItems(): HasMany
+    {
+        return $this->hasMany(FeeItem::class);
+    }
 }

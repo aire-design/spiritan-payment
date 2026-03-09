@@ -48,8 +48,15 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control elegant-input" id="nameInput" name="name" placeholder="Full Name" required>
-                                <label for="nameInput" class="text-secondary">Full Name</label>
+                                <input type="text" class="form-control elegant-input" id="firstNameInput" name="first_name" placeholder="First Name" required>
+                                <label for="firstNameInput" class="text-secondary">First Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control elegant-input" id="lastNameInput" name="last_name" placeholder="Last Name" required>
+                                <label for="lastNameInput" class="text-secondary">Last Name</label>
                             </div>
                         </div>
                         

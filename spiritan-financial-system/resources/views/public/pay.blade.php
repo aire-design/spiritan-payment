@@ -47,66 +47,93 @@
                     
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control elegant-input" id="studentNameInput" name="student_full_name" placeholder="Student Full Name" required>
-                                <label for="studentNameInput" class="text-secondary">Student Full Name</label>
-                            </div>
+                            <label for="studentNameInput" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Student Full Name</label>
+                            <input type="text" class="form-control elegant-input" id="studentNameInput" name="student_full_name" placeholder="John Doe" required readonly>
                         </div>
                         
                         <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control elegant-input" id="admissionNumberInput" name="admission_number" placeholder="Admission Number" required>
-                                <label for="admissionNumberInput" class="text-secondary">Admission Number</label>
-                            </div>
+                            <label for="admissionNumberInput" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Admission Number</label>
+                            <input type="text" class="form-control elegant-input" id="admissionNumberInput" name="admission_number" placeholder="SPT/202X/..." required readonly>
                         </div>
                         
                         <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <select class="form-select elegant-input" id="classSelect" name="class_name" required>
-                                    <option value="" selected disabled>Select Class/Grade</option>
-                                    @foreach($classes as $class)
-                                        <option value="{{ $class->name }}">{{ $class->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="classSelect" class="text-secondary">Class / Grade</label>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control elegant-input" id="parentEmailInput" name="parent_email" placeholder="name@example.com" required>
-                                <label for="parentEmailInput" class="text-secondary">Parent Email</label>
-                            </div>
+                            <label for="parentEmailInput" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Parent Email</label>
+                            <input type="email" class="form-control elegant-input" id="parentEmailInput" name="parent_email" placeholder="name@example.com" value="{{ session('parent_email', '') }}" required>
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control elegant-input" id="parentPhoneInput" name="parent_phone" placeholder="080..." required>
-                                <label for="parentPhoneInput" class="text-secondary">Parent Phone Number</label>
-                            </div>
+                            <label for="parentPhoneInput" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Parent Phone Number</label>
+                            <input type="text" class="form-control elegant-input" id="parentPhoneInput" name="parent_phone" placeholder="080..." required>
+                        </div>
+                        
+                        <hr class="text-muted my-4">
+                        <h5 class="fw-bold mb-3" style="font-family: 'Outfit'; color: var(--md-on-surface);">Fee Selection</h5>
+
+                        <div class="col-md-6">
+                            <label for="classSelect" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Class / Grade</label>
+                            <select class="form-select elegant-input fee-trigger" id="classSelect" name="class_name" required>
+                                <option value="" selected disabled>Select Class/Grade...</option>
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->name }}" data-id="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="termSelect" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Term / Session</label>
+                            <select class="form-select elegant-input fee-trigger" id="termSelect" id="term_id" required>
+                                <option value="" selected disabled>Select Term...</option>
+                                @foreach($terms as $term)
+                                    <option value="{{ $term->id }}">{{ $term->name }} ({{ $term->academicSession->name }})</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <select class="form-select elegant-input" id="feeSelect" name="fee_id" required>
-                                    <option value="" selected disabled>Select Fee / Payment Purpose</option>
-                                    @foreach($fees as $fee)
-                                        <option value="{{ $fee->id }}">{{ $fee->name }} @if(!$fee->is_variable)- ₦{{ number_format($fee->amount, 2) }}@endif</option>
-                                    @endforeach
-                                </select>
-                                <label for="feeSelect" class="text-secondary">Fee / Payment Purpose</label>
-                            </div>
+                            <label for="studentSelect" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Student</label>
+                            <select class="form-select elegant-input fee-trigger" id="studentSelect" required disabled>
+                                <option value="" selected disabled>Select Student...</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 d-none">
+                            <label for="purposeSelect" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Payment Purpose</label>
+                            <select class="form-select elegant-input fee-trigger" id="purposeSelect" required>
+                                @foreach($purposes as $purpose)
+                                    <option value="{{ $purpose->name }}" {{ str_contains(strtolower($purpose->name), 'fee') ? 'selected' : '' }}>{{ $purpose->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <input type="number" step="0.01" class="form-control elegant-input" id="amountInput" name="amount" placeholder="Amount (for variable fee only)">
-                                <label for="amountInput" class="text-secondary">Amount (for variable fee only)</label>
+                        <input type="hidden" name="fee_id" id="hiddenFeeId" required>
+
+                        <div class="col-md-12 mt-4">
+                            <div class="alert alert-info d-none" id="feeLookupLoading">
+                                <div class="spinner-border spinner-border-sm me-2" role="status"></div> Look up fee amount...
+                            </div>
+                            <div class="alert alert-danger d-none" id="feeLookupError">
+                                No fee configured for this selection. Please contact the administrator.
+                            </div>
+                            
+                            <div class="card mb-3 d-none border-primary" id="feeBreakdownCard">
+                                <div class="card-header bg-primary text-white py-2">
+                                    <h6 class="mb-0 fw-bold"><i class="bi bi-receipt me-2"></i>Fee Breakdown</h6>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush" id="feeBreakdownList">
+                                        <!-- Items injected here by JS -->
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="amountContainer">
+                                <label for="amountInput" class="form-label fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">Amount Required (₦)</label>
+                                <input type="number" step="0.01" class="form-control elegant-input fw-bold fs-4 text-success" id="amountInput" name="amount" placeholder="0.00" readonly>
                             </div>
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-lg btn-md-primary w-100 py-3 fs-5 shadow-sm mt-3 d-flex align-items-center justify-content-center gap-2">
+                    <button type="submit" id="submitBtn" class="btn btn-lg btn-md-primary w-100 py-3 fs-5 shadow-sm mt-3 d-flex align-items-center justify-content-center gap-2" disabled>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/><path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/></svg>
                         Proceed to Secure Checkout
                     </button>
@@ -121,12 +148,164 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const classSelect = document.getElementById('classSelect');
+        const termSelect = document.getElementById('termSelect');
+        const studentSelect = document.getElementById('studentSelect');
+        const purposeSelect = document.getElementById('purposeSelect');
+        
+        const studentNameInput = document.getElementById('studentNameInput');
+        const admissionNumberInput = document.getElementById('admissionNumberInput');
+        
+        const hiddenFeeId = document.getElementById('hiddenFeeId');
+        const amountInput = document.getElementById('amountInput');
+        
+        const loadingBox = document.getElementById('feeLookupLoading');
+        const errorBox = document.getElementById('feeLookupError');
+        const submitBtn = document.getElementById('submitBtn');
+        const breakdownCard = document.getElementById('feeBreakdownCard');
+        const breakdownList = document.getElementById('feeBreakdownList');
+
+        let studentsData = {};
+
+        const formatter = new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN',
+        });
+
+        // Ensure any purpose containing 'fee' is selected programmatically
+        let feeSelected = false;
+        Array.from(purposeSelect.options).forEach(opt => {
+            const val = opt.value.toLowerCase();
+            if(val.includes('fee')) {
+                opt.selected = true;
+                feeSelected = true;
+            }
+        });
+        
+        // Fallback: If no purpose containing 'fee' was found, just select the first available option
+        if (!feeSelected && purposeSelect.options.length > 0) {
+            purposeSelect.selectedIndex = 0;
+        }
+
+        classSelect.addEventListener('change', function() {
+            const classId = this.options[this.selectedIndex].getAttribute('data-id');
+            studentSelect.innerHTML = '<option value="" selected disabled>Loading students...</option>';
+            studentSelect.disabled = true;
+            studentNameInput.value = '';
+            admissionNumberInput.value = '';
+
+            fetch(`{{ route('pay.studentsByClass') }}?class_id=${encodeURIComponent(classId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    studentSelect.innerHTML = '<option value="" selected disabled>Select Student</option>';
+                    if(data.success && data.students.length > 0) {
+                        data.students.forEach(student => {
+                            studentsData[student.id] = student;
+                            studentSelect.innerHTML += `<option value="${student.id}">${student.name} (${student.admission_number})</option>`;
+                        });
+                        studentSelect.disabled = false;
+                    } else {
+                        studentSelect.innerHTML = '<option value="" selected disabled>No active students in this class</option>';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    studentSelect.innerHTML = '<option value="" selected disabled>Error loading students</option>';
+                });
+        });
+
+        studentSelect.addEventListener('change', function() {
+            const studentId = this.value;
+            if (studentId && studentsData[studentId]) {
+                const student = studentsData[studentId];
+                studentNameInput.value = student.name;
+                admissionNumberInput.value = student.admission_number;
+            }
+            checkAndLookupFee();
+        });
+
+        const triggers = document.querySelectorAll('.fee-trigger');
+
+        triggers.forEach(trigger => {
+            if (trigger !== classSelect) {
+               trigger.addEventListener('change', checkAndLookupFee);
+            }
+        });
+
+        function checkAndLookupFee() {
+            // Reset state
+            hiddenFeeId.value = '';
+            amountInput.value = '';
+            submitBtn.disabled = true;
+            errorBox.classList.add('d-none');
+            loadingBox.classList.add('d-none');
+            breakdownCard.classList.add('d-none');
+            breakdownList.innerHTML = '';
+            amountInput.readOnly = true;
+
+            const selectedClassId = classSelect.options[classSelect.selectedIndex].getAttribute('data-id');
+            const selectedTerm = termSelect.value;
+            const selectedStudent = studentSelect.value;
+            const selectedPurpose = purposeSelect.value; // Will be "School Fees" automatically
+
+            if (selectedClassId && selectedTerm && selectedStudent && selectedPurpose) {
+                loadingBox.classList.remove('d-none');
+                
+                // Fetch the fee
+                fetch(`{{ route('pay.feeLookup') }}?class_id=${encodeURIComponent(selectedClassId)}&term_id=${encodeURIComponent(selectedTerm)}&purpose=${encodeURIComponent(selectedPurpose)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingBox.classList.add('d-none');
+                        
+                        if (data.success) {
+                            hiddenFeeId.value = data.fee_id;
+                            
+                            if (data.is_variable) {
+                                amountInput.readOnly = false;
+                                amountInput.placeholder = "Enter amount to pay";
+                            } else {
+                                amountInput.value = data.amount;
+                            }
+
+                            if (data.items && data.items.length > 0) {
+                                let itemsHtml = '';
+                                data.items.forEach(item => {
+                                    itemsHtml += `
+                                    <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                        <span class="text-secondary">${item.name}</span>
+                                        <span class="fw-bold">${formatter.format(item.amount)}</span>
+                                    </li>`;
+                                });
+                                breakdownList.innerHTML = itemsHtml;
+                                breakdownCard.classList.remove('d-none');
+                            }
+                            
+                            submitBtn.disabled = false;
+                        } else {
+                            errorBox.classList.remove('d-none');
+                            errorBox.textContent = data.message || "Fee configuration omitted.";
+                        }
+                    })
+                    .catch(err => {
+                        loadingBox.classList.add('d-none');
+                        errorBox.classList.remove('d-none');
+                        errorBox.textContent = 'A network error occurred while looking up fee.';
+                        console.error(err);
+                    });
+            }
+        }
+    });
+</script>
+
 <style>
     .min-vh-75 { min-height: 75vh; }
     .elegant-input {
-        border-radius: 12px;
-        border: 1px solid #e1e2ec;
-        background-color: #fdfbff;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        background-color: #f8f9fa;
+        padding: 0.75rem 1rem;
         transition: all 0.2s ease;
     }
     .elegant-input:focus {
@@ -134,14 +313,9 @@
         box-shadow: 0 0 0 4px var(--md-primary-container);
         background-color: #ffffff;
     }
-    .form-floating > label {
-        padding-left: 1.25rem;
-    }
-    .form-floating > .form-control {
-        padding-left: 1.25rem;
-    }
-    .form-floating > .form-select {
-        padding-left: 1.25rem;
+    .form-label {
+        letter-spacing: 0.5px;
+        margin-bottom: 0.4rem;
     }
 </style>
 @endsection

@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 text-spiritan mb-0">My Payment History</h2>
-    <a href="{{ route('pay.create') }}" class="btn btn-spiritan">Make New Payment</a>
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-3">
+    <h2 class="h3 text-spiritan mb-0 fw-bold" style="font-family: 'Outfit';">My Payment History</h2>
+    <a href="{{ route('pay.create') }}" class="btn btn-md-primary rounded-pill px-4 shadow-sm fw-medium transition-all">
+        Make New Payment <i class="bi bi-wallet2 ms-1"></i>
+    </a>
 </div>
 
 <div class="row g-4 mb-4">

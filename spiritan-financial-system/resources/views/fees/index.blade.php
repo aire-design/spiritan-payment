@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="text-spiritan mb-0">Fees</h3>
-        <a class="btn btn-spiritan" href="{{ route('fees.create') }}">Add Fee</a>
+        <a class="btn btn-md-primary rounded-pill px-4 shadow-sm fw-medium transition-all" href="{{ route('fees.create') }}">Add Fee</a>
     </div>
 
     <div class="card p-3">

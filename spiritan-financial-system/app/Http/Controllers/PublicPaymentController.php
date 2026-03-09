@@ -6,6 +6,8 @@ use App\Jobs\SendPaymentConfirmationJob;
 use App\Models\Fee;
 use App\Models\Payment;
 use App\Models\SchoolClass;
+use App\Models\Term;
+use App\Models\AcademicSession;
 use App\Services\PaystackService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -18,8 +20,93 @@ class PublicPaymentController extends Controller
         $fees = Fee::where('is_active', true)->orderBy('name')->get();
         $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $purposes = \App\Models\PaymentPurpose::where('is_active', true)->orderBy('name')->get();
+        $terms = Term::orderByDesc('starts_at')->get();
 
-        return view('public.pay', compact('fees', 'classes', 'purposes'));
+        return view('public.pay', compact('fees', 'classes', 'purposes', 'terms'));
+    }
+
+    public function studentsByClass(Request $request)
+    {
+        $request->validate(['class_id' => 'required']);
+        
+        $students = \App\Models\Student::where('school_class_id', $request->class_id)
+            ->where('status', 'active')
+            ->orderBy('first_name')
+            ->select('id', 'first_name', 'last_name', 'admission_number')
+            ->get()
+            ->map(function($student) {
+                return [
+                    'id' => $student->id,
+                    'name' => trim("{$student->first_name} {$student->last_name}"),
+                    'admission_number' => $student->admission_number
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'students' => $students
+        ]);
+    }
+
+    public function feeLookup(Request $request)
+    {
+        $request->validate([
+            'class_id' => 'required', // We use class_name in the form, need to align this
+            'term_id' => 'required',
+            'purpose' => 'required|string'
+        ]);
+
+        // Attempt to find the specific fee
+        $fee = Fee::where('is_active', true)
+                  ->whereHas('schoolClass', function($q) use ($request) {
+                      // Form sends 'class_name', so let's match by name if we have to, or use ID.
+                      $q->where('name', $request->class_id)
+                        ->orWhere('id', $request->class_id);
+                  })
+                  ->where('term_id', $request->term_id)
+                  ->where('category', $request->purpose) // category = PaymentPurpose name
+                  ->first();
+
+        // If not found, maybe it's not term-specific (term_id = null)
+        if (!$fee) {
+            $fee = Fee::where('is_active', true)
+                ->whereHas('schoolClass', function($q) use ($request) {
+                    $q->where('name', $request->class_id)
+                    ->orWhere('id', $request->class_id);
+                })
+                ->whereNull('term_id')
+                ->where('category', $request->purpose)
+                ->first();
+        }
+
+        // If still not found, maybe it's for all classes
+        if (!$fee) {
+            $fee = Fee::where('is_active', true)
+                ->whereNull('school_class_id')
+                ->where('category', $request->purpose)
+                ->first();
+        }
+
+        if ($fee) {
+            $fee->load('feeItems');
+            return response()->json([
+                'success' => true,
+                'fee_id' => $fee->id,
+                'amount' => $fee->amount,
+                'is_variable' => $fee->is_variable,
+                'items' => $fee->feeItems->map(function($item) {
+                    return [
+                        'name' => $item->name,
+                        'amount' => $item->amount
+                    ];
+                })
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No active fee configuration found for this selection.'
+        ], 404);
     }
 
     public function store(Request $request, PaystackService $paystack)
